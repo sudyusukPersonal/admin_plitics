@@ -22,7 +22,7 @@ const SettingsPanel = () => (
     <p className="text-gray-500">この機能は現在開発中です。近日公開予定。</p>
   </div>
 );
-
+////
 // Custom hook to detect mobile screen size
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
