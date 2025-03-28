@@ -1,4 +1,5 @@
 // src/components/auth/ProtectedAdminRoute.tsx の修正
+// 認証チェックの完了を追跡するために authCheckComplete 状態変数を追加
 import React, { useState, useEffect } from "react";
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -16,11 +17,25 @@ const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({
   const { partyId: urlPartyId } = useParams<{ partyId: string }>();
   const [countdown, setCountdown] = useState(5);
   const [redirectInProgress, setRedirectInProgress] = useState(false);
+  const [authCheckComplete, setAuthCheckComplete] = useState(false);
+
+  // authCheckComplete状態を管理
+  useEffect(() => {
+    if (!loading) {
+      // loadingが終わったら認証チェックは完了
+      setAuthCheckComplete(true);
+    }
+  }, [loading]);
 
   // カウントダウンの処理
   useEffect(() => {
-    // 政党IDが一致しない場合のみカウントダウンを開始
-    if (currentUser && urlPartyId && partyId !== urlPartyId) {
+    // 認証チェックが完了していて、かつ政党IDが一致しない場合のみカウントダウンを開始
+    if (
+      authCheckComplete &&
+      currentUser &&
+      urlPartyId &&
+      partyId !== urlPartyId
+    ) {
       setRedirectInProgress(true);
 
       // カウントダウンタイマーを設定
@@ -39,7 +54,7 @@ const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({
         clearInterval(timer);
       };
     }
-  }, [currentUser, urlPartyId, partyId]);
+  }, [currentUser, urlPartyId, partyId, authCheckComplete]);
 
   // 認証状態の読み込み中
   if (loading) {
@@ -56,7 +71,7 @@ const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({
   }
 
   // URLに政党IDがある場合（例：/admin/party/:partyId/*）、アクセス権をチェック
-  if (urlPartyId && partyId !== urlPartyId) {
+  if (authCheckComplete && urlPartyId && partyId !== urlPartyId) {
     // カウントダウンが0になったらトップページへリダイレクト
     if (countdown === 0) {
       return <Navigate to="/" replace />;

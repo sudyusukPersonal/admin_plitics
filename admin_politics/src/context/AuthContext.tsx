@@ -79,6 +79,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   // ログアウト機能
   const logout = async () => {
     await signOut(auth);
+    setCurrentUser(null);
+    setPartyId(null);
   };
 
   const value = {
