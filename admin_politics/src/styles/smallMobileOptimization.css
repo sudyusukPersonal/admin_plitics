@@ -1,0 +1,61 @@
+/* 小型モバイルデバイス（幅350px以下）の最適化用CSS */
+@media screen and (max-width: 350px) {
+  /* テキストサイズの縮小 */
+  .text-lg {
+    font-size: 0.95rem !important;
+  }
+
+  .text-xl {
+    font-size: 1.05rem !important;
+  }
+
+  .text-2xl {
+    font-size: 1.15rem !important;
+  }
+
+  .text-sm {
+    font-size: 0.75rem !important;
+  }
+
+  .text-xs {
+    font-size: 0.65rem !important;
+  }
+
+  /* 政策提案データベース部分の調整 */
+  .bg-gradient-to-r.from-gray-900.via-indigo-900.to-gray-900 h1 {
+    font-size: 1.1rem !important;
+  }
+
+  .bg-gradient-to-r.from-gray-900.via-indigo-900.to-gray-900 p {
+    font-size: 0.7rem !important;
+  }
+
+  /* 画像サイズの調整 */
+  .w-12,
+  .h-12 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+  }
+
+  .w-16,
+  .h-16 {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+
+  /* ヘッダー調整 */
+  header h1 {
+    font-size: 0.95rem !important;
+  }
+
+  /* アイコンサイズの調整 */
+  svg:not(.preserve-size) {
+    transform: scale(0.85);
+  }
+
+  /* 検索ボックス */
+  input[type="text"],
+  input[type="search"] {
+    font-size: 0.75rem !important;
+  }
+}
