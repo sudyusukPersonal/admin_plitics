@@ -1,16 +1,8 @@
 // src/components/admin/AdminSidebar.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import {
-  Building,
-  FileText,
-  Settings,
-  ChevronRight,
-  ArrowLeft,
-  X,
-  LogOut,
-} from "lucide-react";
+// LogOutとArrowLeftのインポートを削除
+import { Building, FileText, Settings, ChevronRight, X } from "lucide-react";
 
 interface AdminSidebarProps {
   partyData: any;
@@ -49,16 +41,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
   const { partyId } = useParams<{ partyId: string }>();
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      navigate("/admin/login");
-    } catch (error) {
-      console.error("ログアウトエラー:", error);
-    }
-  };
+  // useAuthとhandleLogout関数を削除
 
   // Get current active tab
   const getActiveTab = () => {
@@ -95,13 +78,13 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
     ? `fixed inset-y-0 left-0 z-50 transform ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       } transition-transform duration-300 ease-in-out bg-white shadow-xl w-64`
-    : `${
-        sidebarOpen ? "w-64" : "w-16"
-      } bg-white shadow-md transition-all duration-300 flex-shrink-0 z-10 h-screen`;
+    : `absolute h-screen bg-white shadow-md transition-all duration-300 ${
+        sidebarOpen ? "w-64 z-40" : "w-16"
+      }`;
 
-  // Backdrop for mobile
+  // Backdrop for mobile and desktop when sidebar is open
   const renderBackdrop = () => {
-    if (isMobile && sidebarOpen) {
+    if (sidebarOpen) {
       return (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
@@ -184,31 +167,7 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({
               {(sidebarOpen || isMobile) && <span>設定</span>}
             </button>
           </div>
-          <div className="mt-auto">
-            <button
-              className="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-100 text-gray-600 transition"
-              onClick={handleLogout}
-            >
-              <LogOut
-                size={sidebarOpen ? 18 : 20}
-                className={sidebarOpen ? "mr-3" : ""}
-              />
-              {sidebarOpen && <span>ログアウト</span>}
-            </button>
-          </div>
-
-          <div className="mt-auto">
-            <button
-              className="w-full flex items-center px-3 py-2 rounded-md hover:bg-gray-100 text-gray-600 transition"
-              onClick={() => navigate("/")}
-            >
-              <ArrowLeft
-                size={sidebarOpen || isMobile ? 18 : 20}
-                className={sidebarOpen || isMobile ? "mr-3" : ""}
-              />
-              {(sidebarOpen || isMobile) && <span>サイトに戻る</span>}
-            </button>
-          </div>
+          {/* ログアウトボタンと「サイトに戻る」ボタンを削除 */}
         </div>
       </div>
     </>
